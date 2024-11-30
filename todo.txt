@@ -1,5 +1,5 @@
 1. Node is initiate
-2. Package.json
+2. Package.json(npm init --Your)
 3. Express js backend with packages
     - yarn add express/ npm i express
     - yarn add cookie-parser
@@ -34,3 +34,4 @@
 
 
 6. Set Debugging
+7.MongoDB Connection
