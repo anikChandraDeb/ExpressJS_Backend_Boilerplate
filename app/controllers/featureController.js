@@ -1,5 +1,6 @@
 import {DecodeToken, EncodeToken} from "../utility/tokenUtility.js";
 import EmailSend from "../utility/emailUtility.js";
+import * as path from "node:path";
 
 export const TokenEncode=async (req,res)=>{
     let result = EncodeToken("anik.deb@gmail.com","123");
@@ -19,3 +20,63 @@ export const Email=async (req,res)=>{
     let result= await EmailSend(EmailTo,EmailText,EmailSubject,EmailHTMLBody);
     res.json({"EmailStatus":result});
 }
+
+export const Profile=async (req,res)=>{
+    res.json({"status":"ok"});
+}
+
+export const CreateCookies=async (req,res)=>{
+
+    let cookieOptions={
+        expires: new Date(Date.now()+3600*1000), //1hour = 3600*1000 milisecond    
+        httpOnly:true,
+        sameSite:true
+    };
+    let data="anik.deb@gmail.com";
+    let cookieName="email";
+
+    res.cookie(cookieName,data,cookieOptions);
+    res.json({"status":"Ok"});
+}
+export const RemoveCookies=async (req,res)=>{
+
+    let cookieOptions={
+        expires: new Date(Date.now()-3600*1000), //minus for remove cookie
+        httpOnly:true,
+        sameSite:true
+    };
+    let data="";
+    let cookieName="email";
+
+    res.cookie(cookieName,data,cookieOptions);
+    res.json({"status":"Ok"});
+}
+
+export const FileUpload = async (req, res) => {
+    try {
+        // Check if files exist
+        if (!req.files || !req.files.myFile) {
+            return res.status(400).json({ status: "No file uploaded" });
+        }
+
+        // Catch the file
+        let myFile = req.files['myFile']; //req.files.myFile
+        console.log(myFile);
+        let myFileName = myFile.name;
+
+        // Prepare File Storage Path
+        let myFilePath = path.resolve(process.cwd(), 'storage', myFileName);
+
+        // Move the file to the destination
+        myFile.mv(myFilePath, function (err) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ status: "File not uploaded" });
+            }
+            res.json({ status: "File uploaded successfully", filePath: myFilePath });
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Server error" });
+    }
+};

@@ -34,4 +34,9 @@
 
 
 6. Set Debugging
-7.MongoDB Connection
+7. MongoDB Connection
+8. JWT token Encode & Decode utility
+9. Email utility
+10. Set middleware in a route
+11. Cookie set and remove 
+12. Upload File

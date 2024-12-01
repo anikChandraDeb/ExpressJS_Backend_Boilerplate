@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import * as taskController from "../app/controllers/taskController.js";
 import * as featureController from "../app/controllers/featureController.js";
+import authMiddlewares from "../app/middlewares/authMiddlewares.js";
 
 //Create Route
 router.post('/createTask',taskController.createTask);
@@ -21,5 +22,15 @@ router.get("/feature2/TokenDecode",featureController.TokenDecode);
 
 //Email route
 router.get("/feature3/EmailSend",featureController.Email);
+
+//Profile route
+router.get('/feature4/Profile',authMiddlewares,featureController.Profile);
+
+//cookie
+router.get('/feature5/CreateCookies',featureController.CreateCookies);
+router.get('/feature6/RemoveCookies',featureController.RemoveCookies);
+
+//File Upload route
+router.post('/feature7/FileUpload',featureController.FileUpload);
 
 export default router; //export this file

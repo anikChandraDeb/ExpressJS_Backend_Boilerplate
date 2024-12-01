@@ -9,7 +9,7 @@ import hpp from "hpp";
 import * as path from "path";
 import router from "./routes/api.js";
 import { MONGODB_CONNECTION,PORT,MAX_JSON_SIZE,URL_ENCODER,WEB_CACHE,REQUEST_LIMIT_NUMBER,REQUEST_LIMIT_TIME } from "./app/config/config.js";
-import fileupload from "fileupload";
+import fileUpload from "express-fileupload";
 import { lutimes } from "fs";
 
 const app = express();
@@ -20,6 +20,7 @@ app.use(express.urlencoded({extended: URL_ENCODER}));
 app.use(hpp());
 app.use(helmet());
 app.use(cookieParser());
+app.use(fileUpload());
 
 // app.use(fileupload({
 //     limits: {fileSize: 50*1024*1024}
